@@ -154,7 +154,7 @@ typedef struct _compParams_ts {
 
 union compParams_u
 {
-   uint8_t        compArray[20];
+   uint8_t        compArray[24];
    compParams_ts  compStruct;
 };
 
