@@ -38,8 +38,8 @@ THE POSSIBILITY OF SUCH DAMAGE.
 // Written originally by Embedded Adventures
 
 
-#ifndef __BME280_MOD-1022_H
-#define __BME280_MOD-1022_H
+#ifndef __BME280_MOD_1022_H
+#define __BME280_MOD_1022_H
 
 #include <inttypes.h>
 
@@ -202,7 +202,8 @@ public:
   double   getTemperatureMostAccurate(void);	// get the most accurate compensated temperature value (more flash/code required)
   float    getHumidity(void);	// get the compensated humidity value
   double   getHumidityMostAccurate(void);	// get the most accurate compensated humidity value (more flash/code required)
-  float    getPressure(void); 	// get the compensated pressure value
+  int32_t  getPressurePa(void); // get the compensated pressure value in pascal, returns a integer
+  float    getPressure(void); 	// get the compensated pressure value in hPa, returns a float
   float    getPressureMoreAccurate(void); 	// get more accurate pressure value (more flash/code required)
   double   getPressureMostAccurate(void);	// get the most accurate pressure value (even more flash/ code required)
    
