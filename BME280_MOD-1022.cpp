@@ -40,7 +40,7 @@ THE POSSIBILITY OF SUCH DAMAGE.
 #include "BME280_MOD-1022.h"
 #include "Wire.h"
 
-// Returns temperature in DegC, double precision. Output value of ì51.23î equals 51.23 DegC.
+// Returns temperature in DegC, double precision. Output value of ‚Äú51.23‚Äù equals 51.23 DegC.
 // t_fine carries fine temperature as global value
 
 double BME280Class::BME280_compensate_T_double(BME280_S32_t adc_T) {
@@ -55,7 +55,7 @@ double var1, var2, T;
   return T;
 }
 
-// Returns pressure in Pa as double. Output value of ì96386.2î equals 96386.2 Pa = 963.862 hPa
+// Returns pressure in Pa as double. Output value of ‚Äú96386.2‚Äù equals 96386.2 Pa = 963.862 hPa
 double BME280Class::BME280_compensate_P_double(BME280_S32_t adc_P) {
   
 double var1, var2, p;
@@ -77,7 +77,7 @@ double var1, var2, p;
   return p;
 }
 
-// Returns humidity in %rH as as double. Output value of ì46.332î represents 46.332 %rH
+// Returns humidity in %rH as as double. Output value of ‚Äú46.332‚Äù represents 46.332 %rH
 double BME280Class::BME280_compensate_H_double(BME280_S32_t adc_H) {
 
  double var_H;
@@ -95,7 +95,7 @@ double BME280Class::BME280_compensate_H_double(BME280_S32_t adc_H) {
   return var_H;
 }
 
-// Returns pressure in Pa as unsigned 32 bit integer. Output value of ì96386î equals 96386 Pa = 963.86 hPa
+// Returns pressure in Pa as unsigned 32 bit integer. Output value of ‚Äú96386‚Äù equals 96386 Pa = 963.86 hPa
 BME280_U32_t BME280Class::BME280_compensate_P_int32(BME280_S32_t adc_P)
 {
 BME280_S32_t var1, var2;
@@ -121,7 +121,7 @@ BME280_U32_t p;
   return p;
 }
 
-// Returns temperature in DegC, resolution is 0.01 DegC. Output value of ì5123î equals 51.23 DegC.
+// Returns temperature in DegC, resolution is 0.01 DegC. Output value of ‚Äú5123‚Äù equals 51.23 DegC.
 // t_fine carries fine temperature as global value
 
 int32_t BME280Class::BME280_compensate_T_int32(BME280_S32_t adc_T)
@@ -136,7 +136,7 @@ BME280_S32_t var1, var2, T;
 }
 
 // Returns pressure in Pa as unsigned 32 bit integer in Q24.8 format (24 integer bits and 8 fractional bits).
-// Output value of ì24674867î represents 24674867/256 = 96386.2 Pa = 963.862 hPa
+// Output value of ‚Äú24674867‚Äù represents 24674867/256 = 96386.2 Pa = 963.862 hPa
 uint32_t BME280Class::BME280_compensate_P_int64(BME280_S32_t adc_P)
 {
 BME280_S64_t var1, var2, p;
@@ -160,7 +160,7 @@ BME280_S64_t var1, var2, p;
 }
 
 // Returns humidity in %RH as unsigned 32 bit integer in Q22.10 format (22 integer and 10 fractional bits).
-// Output value of ì47445î represents 47445/1024 = 46.333 %RH
+// Output value of ‚Äú47445‚Äù represents 47445/1024 = 46.333 %RH
 BME280_U32_t BME280Class::BME280_compensate_H_int32(BME280_S32_t adc_H)
 {
 BME280_S32_t v_x1_u32r;
@@ -195,6 +195,10 @@ double BME280Class::getHumidityMostAccurate(void) {
 
 float BME280Class::getPressure(void) {
   return (float)BME280_compensate_P_int32(adc_p) / 100;
+}
+
+uint32_t BME280Class::getPressurePa(void) {
+  return BME280_compensate_P_int32(adc_p);
 }
 
 float BME280Class::getPressureMoreAccurate(void) {
@@ -272,7 +276,7 @@ void BME280Class::readCompensationParams(void) {
   Wire.write(regCalibStart);
   Wire.endTransmission();
   Wire.requestFrom(addrBME280, 24); 
-  for (count = 0; count < 28; count++) {  // first 28 bytes we can process like this
+  for (count = 0; count < 24; count++) {  // first 28 bytes we can process like this
    compParams.compArray[count] = Wire.read();
   }
   // then they go a bit strangely
@@ -282,7 +286,7 @@ void BME280Class::readCompensationParams(void) {
   Wire.beginTransmission(addrBME280);
   Wire.write(regCalibStart2);
   Wire.endTransmission();
-  Wire.requestFrom(addrBME280, 7);
+  Wire.requestFrom(addrBME280, 8);
 
   compParams.compStruct.dig_H2 = Wire.read();
   compParams.compStruct.dig_H2 |= (uint16_t)Wire.read() << 8;
